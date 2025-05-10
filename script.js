@@ -1,4 +1,3 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const homeTabButton = document.getElementById("datachat-tab-button");
     loadContent('datachat-tab', homeTabButton);
@@ -19,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overview.style.display = '';
         });
     }
+    proceedBtn.click();
 });
 
 
@@ -577,7 +577,6 @@ document.addEventListener('click', function(event) {
         const ticketId = button.getAttribute('data-ticket-id');
         const row = button.closest('tr');
 
-        // Find and update the status cell in the detailed view
         const statusCellDetailed = Array.from(row.children).find(td => {
             return td.querySelector('.track-capsule') && td.textContent.toLowerCase().includes('failed');
         });
@@ -611,7 +610,6 @@ document.addEventListener('click', function(event) {
         // Remove Save button in detailed view
         button.closest('td').innerHTML = '';
 
-        // Re-check all status cells in the same DSP group in the detailed view
         const dspWrapperDetailed = row.closest('.platform-heading-wrapper');
         const statusSpansDetailed = dspWrapperDetailed.querySelectorAll('td span.track-capsule');
 
@@ -661,7 +659,7 @@ async function setupRowClickListener() {
 
     tableBody.addEventListener('click', async (e) => {
 
-        const td = e.target.closest('td');
+        const td = e.target.closest('td');  
         const tr = e.target.closest('tr');
         if (!td || !tr) return;
 
@@ -703,15 +701,147 @@ async function setupRowClickListener() {
 }
 
 
-function getPlatformIcon(platform) {
-  const iconMap = {
-    spotify: '<i class="fab fa-spotify text-success"></i>',           // Green Spotify icon
-    youtube: '<i class="fab fa-youtube text-danger"></i>',           // Red YouTube icon
-    'apple music': '<i class="fab fa-apple text-dark"></i>',         // Apple icon for Apple Music
-  };
 
-  return iconMap[platform.toLowerCase()] || ''; // Return icon HTML or empty string
+function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
+    const targetEl = document.getElementById(targetElementId);
+    if (!targetEl) {
+        console.error(`Target element with ID ${targetElementId} not found.`);
+        return;
+    }
+
+    if (Object.keys(completedspGroupedData).length === 0) {
+        targetEl.innerHTML = '<p>Metadata not yet processed.</p>';
+        return;
+    }
+
+    let tableHTML = '';
+
+    for (const dsp in completedspGroupedData) {
+        if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId]) {
+            const platformIcon = getPlatformIcon(dsp);
+            const rules = completedspGroupedData[dsp][ticketId];
+
+            // Determine if all statuses are "passed" for this DSP and ticket
+            const allPassed = rules.every(rule => rule.status?.toLowerCase() === 'passed');
+            const statusClass = allPassed ? 'status-passed' : 'status-failed';
+            const dotClass = allPassed ? 'dot-passed' : 'dot-failed';
+            const statusText = allPassed ? 'Passed' : 'Failed';
+
+            tableHTML += `
+                <div class="platform-heading-wrapper" data-platform="${dsp}">
+                    <h5 class="platform-heading">
+                        <span class="platform-icon">${platformIcon} ${dsp}</span>
+                        <span class="track-capsule universal-status ${statusClass}" data-dsp="${dsp}">
+                            <span class="status-dot ${dotClass}"></span>
+                            ${statusText}
+                        </span>
+                    </h5>
+                    ${generateTableHTMLForTicket(rules,ticketId,dsp)}
+                </div>
+                `;
+        }
+    }
+
+    if (tableHTML === '') {
+        targetEl.innerHTML = `<p>No metadata found for ticket ID: ${ticketId}</p>`;
+    } else {
+        targetEl.innerHTML = tableHTML;
+    }
 }
+
+
+function generateTableHTMLForTicket(rules,ticketId,dsp) {
+    if (!rules || rules.length === 0) {
+        return '<p>No rules found for this DSP.</p>';
+    }
+    const allColumns = Object.keys(rules[0]);
+    let tableHTML = '<table class="table table-bordered table-striped"><thead><tr>';
+    tableHTML += allColumns.map(col => `<th>${formatColumnName(col)}</th>`).join('');
+    tableHTML += '<th>Save</th>';
+    tableHTML += '</tr></thead><tbody>';
+
+    rules.forEach((row, rowIndex) => {
+        tableHTML += '<tr data-row-index="' + rowIndex + '">'; 
+        let statusIsPassed = false;
+        let currentDsp = ''; 
+        let currentTicketId = ''; 
+        if (row.dsp) {
+            currentDsp = row.dsp;
+        }else{
+            currentDsp=dsp;
+        }
+
+        if (row.ticketId) {
+            currentTicketId = row.ticketId;
+        } else if (/* Logic to access ticketId from context */ ticketId) {
+            currentTicketId = ticketId; 
+        }
+
+
+        allColumns.forEach(col => {
+            const value = row[col] ?? 'N/A';
+
+            if (col === 'status' && value !== 'N/A') {
+                const statusClass = value.toLowerCase() === 'failed' ? 'status-failed' : 'status-passed';
+                const dotClass = value.toLowerCase() === 'failed' ? 'dot-failed' : 'dot-passed';
+
+                tableHTML += `
+                    <td>
+                        <span class="track-capsule ${statusClass}">
+                            <span class="status-dot ${dotClass}"></span>
+                            ${value}
+                        </span>
+                    </td>
+                `;
+
+                if (value.toLowerCase() === 'passed') {
+                    statusIsPassed = true;
+                }
+            } else if (col === 'new_value') {
+                if (!statusIsPassed) {
+                    tableHTML += `
+                        <td>
+                            <span class="editable-cell"
+                                contenteditable="true"
+                                data-row-index="${rowIndex}"
+                                data-column-name="${col}">
+                                ${value}
+                            </span>
+                        </td>
+                    `;
+                } else {
+                    tableHTML += `<td>${value}</td>`;
+                }
+            } else {
+                tableHTML += `<td>${value}</td>`;
+            }
+        });
+
+        if (!statusIsPassed) {
+            tableHTML += `
+                <td>
+                    <button
+                        class="track-capsule status-save"
+                        data-row-index="${rowIndex}"
+                        data-dsp="${currentDsp}"
+                        data-ticket-id="${currentTicketId}"
+                    >
+                        Save
+                    </button>
+                </td>
+            `;
+        } else {
+            tableHTML += `<td></td>`;
+        }
+
+        tableHTML += '</tr>';
+    });
+
+    tableHTML += '</tbody></table>';
+    return tableHTML;
+}
+
+
 
 async function collectValidationForTableRows(tableName) {
     const results = { items: [] };
@@ -783,7 +913,6 @@ async function collectValidationForTableRows(tableName) {
         await Promise.all(batchPromises);
 
         progressContainer.style.display = 'none';
-        completeJson = results;
 
         return results;
 
@@ -834,124 +963,17 @@ function divideIndividualItemByDsp(tableData) {
     return dspGroupedData;
 }
 
-function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
-    const targetEl = document.getElementById(targetElementId);
-    if (!targetEl) {
-        console.error(`Target element with ID ${targetElementId} not found.`);
-        return;
-    }
 
-    if (Object.keys(completedspGroupedData).length === 0) {
-        targetEl.innerHTML = '<p>Metadata not yet processed.</p>';
-        return;
-    }
+function getPlatformIcon(platform) {
+  const iconMap = {
+    spotify: '<i class="fab fa-spotify text-success"></i>',           // Green Spotify icon
+    youtube: '<i class="fab fa-youtube text-danger"></i>',           // Red YouTube icon
+    'apple music': '<i class="fab fa-apple text-dark"></i>',         // Apple icon for Apple Music
+  };
 
-    let tableHTML = '';
-
-    for (const dsp in completedspGroupedData) {
-        if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId]) {
-            const platformIcon = getPlatformIcon(dsp);
-            const rules = completedspGroupedData[dsp][ticketId];
-
-            // Determine if all statuses are "passed" for this DSP and ticket
-            const allPassed = rules.every(rule => rule.status?.toLowerCase() === 'passed');
-            const statusClass = allPassed ? 'status-passed' : 'status-failed';
-            const dotClass = allPassed ? 'dot-passed' : 'dot-failed';
-            const statusText = allPassed ? 'Passed' : 'Failed';
-
-            tableHTML += `
-                <div class="platform-heading-wrapper" data-platform="${dsp}">
-                    <h5 class="platform-heading">
-                        <span class="platform-icon">${platformIcon} ${dsp}</span>
-                        <span class="track-capsule universal-status ${statusClass}" data-dsp="${dsp}">
-                            <span class="status-dot ${dotClass}"></span>
-                            ${statusText}
-                        </span>
-                    </h5>
-                    ${generateTableHTMLForTicket(rules)}
-                </div>
-                `;
-        }
-    }
-
-    if (tableHTML === '') {
-        targetEl.innerHTML = `<p>No metadata found for ticket ID: ${ticketId}</p>`;
-    } else {
-        targetEl.innerHTML = tableHTML;
-    }
+  return iconMap[platform.toLowerCase()] || ''; // Return icon HTML or empty string
 }
 
-
-function generateTableHTMLForTicket(tableData) {
-    if (!tableData || tableData.length === 0) {
-        return '<p>No rules found for this DSP.</p>';
-    }
-    const allColumns = Object.keys(tableData[0]);
-
-    let tableHTML = '<table class="table table-bordered table-striped"><thead><tr>';
-    tableHTML += allColumns.map(col => `<th>${formatColumnName(col)}</th>`).join('');
-    tableHTML += '<th>Save</th>'; // Add a "Save" button column
-    tableHTML += '</tr></thead><tbody>';
-
-    tableData.forEach((row, rowIndex) => {
-        tableHTML += '<tr>';
-        let statusIsPassed = false;
-
-        allColumns.forEach(col => {
-            const value = row[col] ?? 'N/A';
-
-            if (col === 'status' && value !== 'N/A') {
-                const statusClass = value.toLowerCase() === 'failed' ? 'status-failed' : 'status-passed';
-                const dotClass = value.toLowerCase() === 'failed' ? 'dot-failed' : 'dot-passed';
-
-                tableHTML += `
-                    <td>
-                        <span class="track-capsule ${statusClass}">
-                            <span class="status-dot ${dotClass}"></span>
-                            ${value}
-                        </span>
-                    </td>
-                `;
-
-                if (value.toLowerCase() === 'passed') {
-                    statusIsPassed = true;
-                }
-            } else if (col === 'new_value') {
-                if (!statusIsPassed) {
-                    tableHTML += `
-                        <td>
-                            <span class="editable-cell"
-                                  contenteditable="true"
-                                  data-row-index="${rowIndex}"
-                                  data-column-name="${col}">
-                                ${value}
-                            </span>
-                        </td>
-                    `;
-                } else {
-                    tableHTML += `<td>${value}</td>`;
-                }
-            } else {
-                tableHTML += `<td>${value}</td>`;
-            }
-        });
-
-        if (!statusIsPassed) {
-            tableHTML += `
-                <td>
-                    <button class="track-capsule status-save" data-row-index="${rowIndex}">Save</button>
-                </td>
-            `;
-        } else {
-            tableHTML += `<td></td>`;
-        }
-
-        tableHTML += '</tr>';
-    });
-
-    tableHTML += '</tbody></table>';
-    return tableHTML;
-}
 
 async function getLLMValidationResponse(batchData) {
     try {
@@ -1049,7 +1071,6 @@ ${JSON.stringify(batchData, null, 2)}
             if (!Array.isArray(parsed)) {
                 throw new Error("LLM did not return an array");
             }
-            console.log(parsed);
             return parsed;
         } else {
             throw new Error("JSON response not found");
@@ -1195,3 +1216,4 @@ async function onQuerySubmit(e) {
         console.log();
     }
 }
+
