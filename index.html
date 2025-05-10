@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metadata AI Assist</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/gramener/assets/main/straive-favicon.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-markdown@0.0.10/html-to-markdown.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <!-- FontAwesome CDN -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+
+    <style>
+        #row-description {
+            display: flex;
+            flex-direction: row;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            background: #fff;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            gap: 15px;
+        }
+
+        .left-pane,
+        .right-pane {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        #row-detail-content {
+            flex: 1;
+            overflow: auto;
+            padding-bottom: 10px;
+        }
+
+        #ai-assitance {
+            resize: vertical;
+            overflow: auto;
+            border: 1px solid #ccc;
+            border-radius: 0.25rem;
+            padding: 10px;
+            min-height: 100px;
+            max-height: auto;
+        }
+
+        #email-content-assist {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .assist-tabs {
+            display: flex;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .assist-tab {
+            padding: 10px 15px;
+            cursor: pointer;
+            background: #f1f1f1;
+            border: 1px solid #ccc;
+            border-bottom: none;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .assist-tab.active {
+            background: #fff;
+            font-weight: bold;
+        }
+
+        .assist-tab-content {
+            border: 1px solid #ccc;
+            padding: 15px;
+            background: #fff;
+            overflow-y: auto;
+        }
+
+        #back-to-table {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .clamped-description {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: box;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            box-orient: vertical;
+            -webkit-line-clamp: 4;
+            line-clamp: 4;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 7.5em;
+            position: relative;
+            transition: max-height 0.3s ease;
+        }
+
+        .clamped-description.expanded {
+            display: block;
+            max-height: none !important;
+            overflow: visible;
+            -webkit-line-clamp: unset;
+            line-clamp: unset;
+            -webkit-box-orient: initial;
+        }
+
+
+        .expand-toggle {
+            color: rgb(64 64 71);
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 4px;
+            display: inline-block;
+        }
+        .platform-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0;
+            cursor: pointer;
+        }
+
+        .platform-tab {
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid transparent;
+            font-weight: 500;
+        }
+
+        .platform-tab.active {
+            border-color: #007bff;
+            color: #007bff;
+        }
+
+        .track-capsule {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 2px 8px;
+            font-weight: 500;
+            color: #000000;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+
+        /* Capsule background and border */
+        .status-passed {
+            background-color: #e1ffe2;
+            border: 1px solid #388E3C;
+        }
+
+        .status-save {
+            background-color: #d5e3f5;
+            border: 1px solid #0017a3;
+        }
+
+        .status-failed {
+            background-color: #ffe2e0;
+            border: 1px solid #C62828;
+        }
+
+        /* Dot */
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        /* Dot-specific colors */
+        .dot-passed {
+            background-color: #2E7D32; /* Dark green */
+        }
+
+        .dot-failed {
+            background-color: #B71C1C; /* Dark red */
+        }
+
+                /* Pending status */
+        .status-pending {
+            background-color: #dedfe0;
+            border: 1px solid #5c6064; /* Medium blue */
+        }
+
+        .dot-pending {
+            background-color: #5c6064; /* Medium blue */
+        }
+
+        /* Untracked status */
+        .status-untracked {
+            background-color: #f2f3f4;
+            border: 1px solid #5c6064; /* Neutral gray */
+        }
+
+        .dot-untracked {
+            background-color: #5c6064; /* Neutral gray */
+        }
+
+        .editable-cell {
+    border: 1px solid #c0c0c0;
+    padding: 3px;
+    min-width: 100px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+    </style>
+
+</head>
+
+<body style="zoom:90%">
+    <div class="main-container">
+        <nav class="navbar navbar-expand-lg"
+            style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1030; background-color: rgb(237, 240, 243)">
+            <div style="font-size: 1.3rem; color: #2b2830;">
+                <img fetchpriority="high" class="logo-main logo-reg"
+                    src="https://www.straive.com/wp-content/uploads/2024/12/Website-Logo-HD-1-172x48.png" height="35"
+                    width="120" alt="Straive Website Logo" style="margin-left: 1rem;">
+                | Metadata AI Assist
+            </div>
+        </nav>
+        <nav class="sidebar" style="margin-top: 4rem; margin-left: 0.5rem; display:none">
+            <p class="btn" data-tab="home-tab" id="home-tab-button">
+                <i class="bi bi-house"></i> Home
+            </p>
+            <p class="btn" data-tab="datachat-tab" id="datachat-tab-button">
+                <i class="bi bi-upload"></i> Datachat
+            </p>
+        </nav>
+
+        <div id="app-overview" style="max-width:80%; margin-top:4rem;padding:32px 24px;margin-left:2rem;">
+            <button id="proceed-btn" class="btn btn-secondary btn-sm">Proceed</button>
+        </div>
+        <div class="content" id="main-content" style="margin-top:2.2rem; padding: 20px; display:none;">
+            <button id="back-to-home-btn" class="btn btn-link d-none">
+                <i class="bi bi-arrow-left"></i> Back to Home
+            </button>
+            <div class="tab-content" id="tabContent">
+
+                <div id="home-tab" class="tab active">
+
+                </div>
+
+                <div id="datachat-tab" class="tab">
+                    <div style="display: flex; align-items: center; margin-top: 0.5rem;">
+                        <h5 style=" margin:0">Tracks Metadata:</h5>
+                        <button id="check-status-button" class="btn btn-secondary btn-sm" style="margin-left:0.5rem;">
+                            Check status
+                        </button>
+                    </div>
+                        
+                    
+                    <form id="upload" class="mx-auto narrative "></form>
+                    <div id="progress-container" style="display: none; margin-top: 20px; width:20%">
+                        <div class="progress">
+                            <div id="progress-bar" class="progress-bar" role="progressbar"
+                                style="width: 0%; background-color: #fb7717;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                                0%
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div id="tables-container" class="table-responsive" style="display:none;"></div>
+                        <div id="sql" class="narrative mx-auto my-3"></div>
+                        <div id="result" class="table-responsive container mx-auto"></div>
+                    </div>
+
+                </div>
+            </div>
+
+            <input type="file" id="rules-csv-input" accept=".csv" class="d-none"/>
+
+
+            <div id="ticket-table-content">
+                
+                <div id="table-container">
+                    <table class="table table-sm table-hover align-middle table-bordered table-striped">
+                        <thead id="table-head"></thead>
+                        <tbody id="table-body"></tbody>
+                    </table>
+                </div>
+
+                <div id="row-description" style="display: none;">
+                    <button id="back-to-table" class="btn btn-link mb-3" style="text-align: left; margin-left:0.25rem;">
+                        <i class="bi bi-arrow-left"></i> Back to Tracks
+                    </button>
+                    <div id="metadataStatus" style="padding:2px" contenteditable="false"></div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="script.js" type="module"></script>
+
+</body>
+
+</html>
