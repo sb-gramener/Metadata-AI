@@ -1,0 +1,51 @@
+Track Title,Artist Name,ISRC,Genre,Label Name,Composer(s),Language,Explicit,Release Date,Cover Art Dimensions,File Format,UPC,Label Manager Name,Imprint Name,Release Name,Marketing Blurb,Mood
+Track 1,Rico Beats,US-ABC-23-00001,Electro,Echo Productions,Rico Beats,fr,Yes,2024-06-01,3000x3000,AAC,541507790259,Bob,ML-Imprint,Rico Beats - Track 1,Track 1 by Rico Beats: A new Electro journey.,Dreamy
+Track 2,Kai,US-ABC-23-00002,Ambient,StarSound,Kai,pt,Yes,2024-06-02,3000x3000,AAC,525815370599,Bob,SSound-Imprint,Kai - Track 2,Track 2 by Kai: A new Ambient journey.,Chill
+Track 3,Mila Sun,INVALID,Pop,Moonlight Label,Mila Sun,de,No,2024-06-03,3000x3000,AAC,190224662780,Carol,SS-Imprint,Mila Sun - Track 3,,Uplifting
+Track 4,Mila Sun,US-ABC-23-00004,Pop,Echo Productions,Mila Sun,en,Yes,2024-06-04,3000x3000,FLAC,561770120758,Carol,Echo-Imprint,Mila Sun - Track 4,Track 4 by Mila Sun: A new Pop journey.,Melancholic
+Track 5,Luna Grey,US-ABC-23-00005,Rock,Sunset Music,Luna Grey,de,No,2024-06-05,3000x3000,MP3,482104480059,Eve,SS-Imprint,Luna Grey - Track 5,Track 5 by Luna Grey: A new Rock journey.,Melancholic
+Track 6,Rico Beats,INVALID,,StarSound,Rico Beats,es,No,2024-06-06,3000x3000,FLAC,953023440299,Bob,SSound-Imprint,Rico Beats - Track 6,Track 6 by Rico Beats: A new Electro journey.,Chill
+Track 7,Rico Beats,US-ABC-23-00007,Rock,StarSound,Rico Beats,de,No,2024-06-07,3000x3000,MP3,113678845749,Bob,SS-Imprint,Rico Beats - Track 7,Track 7 by Rico Beats: A new Rock journey.,Melancholic
+Track 8,Rico Beats,US-ABC-23-00008,Rock,Sunset Music,Rico Beats,de,No,2024-06-08,3000x3000,WAV,271130969812,Alice,SSound-Imprint,Rico Beats - Track 8,Track 8 by Rico Beats: A new Rock journey.,Energetic
+Track 9,Rico Beats,US-ABC-23-00009,Pop,GreyHouse Records,Rico Beats,fr,Yes,2024-06-09,3000x3000,WAV,773460307982,Alice,SSound-Imprint,Rico Beats - Track 9,Track 9 by Rico Beats: A new Pop journey.,Uplifting
+Track 10,Kai,US-ABC-23-00010,Ambient,Sunset Music,Kai,en,No,2024-06-10,3000x3000,AAC,799097282848,Alice,SSound-Imprint,Kai - Track 10,Track 10 by Kai: A new Ambient journey.,Chill
+Track 11,Rico Beats,US-ABC-23-00011,Electro,Moonlight Label,Rico Beats,fr,Yes,2024-06-11,3000x3000,MP3,237711934511,Carol,GH-Imprint,Rico Beats - Track 11,Track 11 by Rico Beats: A new Electro journey.,Uplifting
+Track 12,Luna Grey,US-ABC-23-00012,Electro,Sunset Music,Luna Grey,pt,Yes,2024-06-12,3000x3000,MP3,103099804676,Bob,SSound-Imprint,Luna Grey - Track 12,Track 12 by Luna Grey: A new Electro journey.,Energetic
+Track 13,Mila Sun,US-ABC-23-00013,Ambient,Moonlight Label,Mila Sun,pt,No,2024-06-13,3000x3000,MP3,321462582268,Eve,SSound-Imprint,Mila Sun - Track 13,Track 13 by Mila Sun: A new Ambient journey.,Uplifting
+Track 14,,US-ABC-23-00014,Ambient,Echo Productions,Luna Grey,de,No,2024-06-14,3000x3000,AAC,219957137985,Dave,SSound-Imprint,Luna Grey - Track 14,Track 14 by Luna Grey: A new Ambient journey.,Uplifting
+Track 15,Mila Sun,US-ABC-23-00015,,,Mila Sun,en,No,2024-06-15,3000x3000,WAV,648928775673,Alice,ML-Imprint,Mila Sun - Track 15,Track 15 by Mila Sun: A new Pop journey.,Energetic
+Track 16,Kai,US-ABC-23-00016,Pop,GreyHouse Records,Kai,de,No,2024-06-16,3000x3000,MP3,108619793766,Carol,SS-Imprint,Kai - Track 16,Track 16 by Kai: A new Pop journey.,Uplifting
+Track 17,Zara,US-ABC-23-00017,Hip-Hop,GreyHouse Records,Zara,de,No,2024-06-17,3000x3000,MP3,603450758815,Bob,SSound-Imprint,Zara - Track 17,Track 17 by Zara: A new Hip-Hop journey.,Chill
+Track 18,Rico Beats,US-ABC-23-00018,Pop,Moonlight Label,Rico Beats,es,No,2024-06-18,3000x3000,FLAC,659638010992,Alice,SS-Imprint,Rico Beats - Track 18,Track 18 by Rico Beats: A new Pop journey.,Dreamy
+Track 19,Luna Grey,US-ABC-23-00019,Ambient,Sunset Music,Luna Grey,fr,Yes,2024-06-19,3000x3000,MP3,650784724370,Dave,ML-Imprint,Luna Grey - Track 19,Track 19 by Luna Grey: A new Ambient journey.,Dreamy
+Track 20,Kai,US-ABC-23-00020,Pop,StarSound,Kai,fr,No,2024-06-20,3000x3000,AAC,598145009249,Carol,Echo-Imprint,Kai - Track 20,Track 20 by Kai: A new Pop journey.,Uplifting
+Track 21,,US-ABC-23-00021,Electro,StarSound,Luna Grey,en,No,2024-06-21,3000x3000,AAC,800150913426,Dave,GH-Imprint,,Track 21 by Luna Grey: A new Electro journey.,Chill
+Track 22,Kai,US-ABC-23-00022,Hip-Hop,GreyHouse Records,Kai,fr,Yes,2024-06-22,3000x3000,AAC,542972279424,Bob,SS-Imprint,Kai - Track 22,Track 22 by Kai: A new Hip-Hop journey.,Chill
+Track 23,Mila Sun,US-ABC-23-00023,Hip-Hop,,Mila Sun,pt,Yes,2024-06-23,3000x3000,AAC,INVALID,Alice,SSound-Imprint,Mila Sun - Track 23,Track 23 by Mila Sun: A new Hip-Hop journey.,Uplifting
+Track 24,Kai,INVALID,Hip-Hop,StarSound,Kai,de,No,2024-06-24,3000x3000,AAC,730183181103,Carol,GH-Imprint,,Track 24 by Kai: A new Hip-Hop journey.,Melancholic
+Track 25,Zara,US-ABC-23-00025,Electro,Echo Productions,Zara,es,No,2024-06-25,3000x3000,MP3,577177186813,Bob,SS-Imprint,Zara - Track 25,Track 25 by Zara: A new Electro journey.,Dreamy
+Track 26,,INVALID,Hip-Hop,Echo Productions,Zara,en,No,2024-06-26,3000x3000,WAV,822310098915,Dave,ML-Imprint,Zara - Track 26,Track 26 by Zara: A new Hip-Hop journey.,Melancholic
+Track 27,Rico Beats,US-ABC-23-00027,Electro,Moonlight Label,Rico Beats,en,No,2024-06-27,3000x3000,MP3,900443244402,Bob,Echo-Imprint,Rico Beats - Track 27,Track 27 by Rico Beats: A new Electro journey.,Energetic
+Track 28,Rico Beats,US-ABC-23-00028,Electro,,Rico Beats,de,No,2024-06-28,3000x3000,FLAC,942802228219,Alice,GH-Imprint,Rico Beats - Track 28,,Dreamy
+Track 29,Kai,US-ABC-23-00029,Hip-Hop,Echo Productions,Kai,pt,Yes,2024-06-29,3000x3000,MP3,297202840948,Eve,GH-Imprint,Kai - Track 29,Track 29 by Kai: A new Hip-Hop journey.,Melancholic
+Track 30,Rico Beats,US-ABC-23-00030,Pop,,Rico Beats,es,Yes,2024-06-30,3000x3000,AAC,INVALID,Alice,SS-Imprint,Rico Beats - Track 30,Track 30 by Rico Beats: A new Pop journey.,Chill
+Track 31,Luna Grey,US-ABC-23-00031,Electro,Sunset Music,Luna Grey,en,Yes,2024-07-01,3000x3000,MP3,236026525614,Bob,GH-Imprint,Luna Grey - Track 31,Track 31 by Luna Grey: A new Electro journey.,Dreamy
+Track 32,,US-ABC-23-00032,Electro,,Luna Grey,es,Yes,2024-07-02,3000x3000,WAV,829325652726,Eve,SSound-Imprint,Luna Grey - Track 32,Track 32 by Luna Grey: A new Electro journey.,Melancholic
+Track 33,,US-ABC-23-00033,Hip-Hop,StarSound,Zara,fr,Yes,2024-07-03,3000x3000,FLAC,839568775187,Bob,SS-Imprint,,Track 33 by Zara: A new Hip-Hop journey.,Dreamy
+Track 34,Luna Grey,US-ABC-23-00034,,Sunset Music,Luna Grey,pt,Yes,2024-07-04,3000x3000,AAC,742487736633,Carol,SSound-Imprint,Luna Grey - Track 34,,Dreamy
+Track 35,,US-ABC-23-00035,,Echo Productions,Mila Sun,de,No,2024-07-05,3000x3000,WAV,354330014699,Dave,ML-Imprint,Mila Sun - Track 35,Track 35 by Mila Sun: A new Ambient journey.,Chill
+Track 36,,US-ABC-23-00036,Pop,StarSound,Kai,pt,No,2024-07-06,3000x3000,WAV,631350140009,Bob,SS-Imprint,Kai - Track 36,,Energetic
+Track 37,Zara,US-ABC-23-00037,,,Zara,pt,Yes,2024-07-07,3000x3000,WAV,698756893684,Bob,GH-Imprint,Zara - Track 37,Track 37 by Zara: A new Rock journey.,Dreamy
+Track 38,Rico Beats,US-ABC-23-00038,Electro,Sunset Music,Rico Beats,en,Yes,2024-07-08,3000x3000,FLAC,917914987076,Carol,Echo-Imprint,Rico Beats - Track 38,Track 38 by Rico Beats: A new Electro journey.,Melancholic
+Track 39,Zara,INVALID,Hip-Hop,StarSound,Zara,pt,Yes,2024-07-09,3000x3000,AAC,392462177326,Bob,SS-Imprint,Zara - Track 39,Track 39 by Zara: A new Hip-Hop journey.,Energetic
+Track 40,Luna Grey,US-ABC-23-00040,Rock,StarSound,Luna Grey,es,No,2024-07-10,3000x3000,MP3,531208294422,Bob,SSound-Imprint,Luna Grey - Track 40,Track 40 by Luna Grey: A new Rock journey.,Chill
+Track 41,Rico Beats,US-ABC-23-00041,Ambient,Sunset Music,Rico Beats,fr,No,2024-07-11,3000x3000,AAC,511700488960,Alice,SSound-Imprint,Rico Beats - Track 41,Track 41 by Rico Beats: A new Ambient journey.,Melancholic
+Track 42,Mila Sun,INVALID,Pop,Echo Productions,Mila Sun,pt,No,2024-07-12,3000x3000,MP3,862671804066,Carol,ML-Imprint,,Track 42 by Mila Sun: A new Pop journey.,Energetic
+Track 43,Luna Grey,US-ABC-23-00043,Electro,Echo Productions,Luna Grey,es,Yes,2024-07-13,3000x3000,MP3,789992873127,Eve,SSound-Imprint,Luna Grey - Track 43,Track 43 by Luna Grey: A new Electro journey.,Chill
+Track 44,Zara,US-ABC-23-00044,Rock,Sunset Music,Zara,es,Yes,2024-07-14,3000x3000,WAV,247474377430,Bob,SS-Imprint,Zara - Track 44,,Melancholic
+Track 45,Luna Grey,US-ABC-23-00045,Ambient,Echo Productions,Luna Grey,pt,Yes,2024-07-15,3000x3000,WAV,347805599220,Dave,GH-Imprint,Luna Grey - Track 45,Track 45 by Luna Grey: A new Ambient journey.,Melancholic
+Track 46,Zara,US-ABC-23-00046,Electro,Moonlight Label,Zara,en,Yes,2024-07-16,3000x3000,AAC,690229313380,Dave,SS-Imprint,,Track 46 by Zara: A new Electro journey.,Dreamy
+Track 47,Rico Beats,US-ABC-23-00047,Pop,GreyHouse Records,Rico Beats,de,No,2024-07-17,3000x3000,WAV,149087155568,Alice,GH-Imprint,Rico Beats - Track 47,Track 47 by Rico Beats: A new Pop journey.,Dreamy
+Track 48,Zara,INVALID,Hip-Hop,Echo Productions,Zara,de,Yes,2024-07-18,3000x3000,MP3,INVALID,Alice,ML-Imprint,Zara - Track 48,Track 48 by Zara: A new Hip-Hop journey.,Melancholic
+Track 49,Mila Sun,INVALID,Electro,Echo Productions,Mila Sun,de,Yes,2024-07-19,3000x3000,AAC,983375000286,Eve,ML-Imprint,,Track 49 by Mila Sun: A new Electro journey.,Uplifting
+Track 50,Zara,US-ABC-23-00050,Ambient,Sunset Music,Zara,pt,Yes,2024-07-20,3000x3000,MP3,326738105494,Bob,SS-Imprint,Zara - Track 50,Track 50 by Zara: A new Ambient journey.,Dreamy

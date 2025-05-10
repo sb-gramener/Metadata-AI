@@ -1,0 +1,43 @@
+DSP,Category,Field,Rule
+Spotify,Audio Specs,Format,"16-bit or 24-bit WAV/FLAC, 44.1 kHz sample rate"
+Spotify,Cover Art,Dimensions,3000x3000 px (square)
+YouTube,Audio Specs,Format,"MP3, AAC, WAV, FLAC; bitrate ≥192 kbps for MP3"
+YouTube,Cover Art,Thumbnail Dimensions,1280x720 px (16:9)
+Apple Music,Audio Specs,Format,"16-bit or 24-bit WAV/AIF, 44.1 kHz"
+Apple Music,Cover Art,Dimensions,"3000x3000 px, JPG/PNG, sRGB"
+Spotify,Additional Metadata Fields,UPC,Valid 12- or 13-digit code matching release bundle
+Spotify,Additional Metadata Fields,Label Manager Name,Must match registered account manager profile
+Spotify,Additional Metadata Fields,Label Name,Exact match of registered label entity; no abbreviations
+Spotify,Additional Metadata Fields,Imprint Name,Optional: must be a valid label imprint entry if provided
+Spotify,Additional Metadata Fields,Genre,Must use DSP’s supported genre taxonomy; Title Case
+Spotify,Additional Metadata Fields,Sub-Genre,Optional; must match DSP’s subgenre list if provided
+Spotify,Additional Metadata Fields,Release Date,YYYY-MM-DD format; ≥ today for new; pre-save ≥ 2 weeks out
+Spotify,Additional Metadata Fields,Artist Name,Exact match of registered artist profile; case-sensitive
+Spotify,Additional Metadata Fields,Release Name,≤100 characters; no emojis; consistent with UPC metadata
+Spotify,Additional Metadata Fields,Format,Must comply with DSP audio spec formats (see audio specs)
+Spotify,Additional Metadata Fields,Marketing Blurb,≤300 characters; plain text; no URLs
+Spotify,Additional Metadata Fields,Mood,Optional; select from DSP’s mood tags list
+YouTube,Additional Metadata Fields,UPC,Valid 12- or 13-digit code matching release bundle
+YouTube,Additional Metadata Fields,Label Manager Name,Must match registered account manager profile
+YouTube,Additional Metadata Fields,Label Name,Exact match of registered label entity; no abbreviations
+YouTube,Additional Metadata Fields,Imprint Name,Optional: must be a valid label imprint entry if provided
+YouTube,Additional Metadata Fields,Genre,Must use DSP’s supported genre taxonomy; Title Case
+YouTube,Additional Metadata Fields,Sub-Genre,Optional; must match DSP’s subgenre list if provided
+YouTube,Additional Metadata Fields,Release Date,YYYY-MM-DD format; ≥ today for new; pre-save ≥ 2 weeks out
+YouTube,Additional Metadata Fields,Artist Name,Exact match of registered artist profile; case-sensitive
+YouTube,Additional Metadata Fields,Release Name,≤100 characters; no emojis; consistent with UPC metadata
+YouTube,Additional Metadata Fields,Format,Must comply with DSP audio spec formats (see audio specs)
+YouTube,Additional Metadata Fields,Marketing Blurb,≤300 characters; plain text; no URLs
+YouTube,Additional Metadata Fields,Mood,Optional; select from DSP’s mood tags list
+Apple Music,Additional Metadata Fields,UPC,Valid 12- or 13-digit code matching release bundle
+Apple Music,Additional Metadata Fields,Label Manager Name,Must match registered account manager profile
+Apple Music,Additional Metadata Fields,Label Name,Exact match of registered label entity; no abbreviations
+Apple Music,Additional Metadata Fields,Imprint Name,Optional: must be a valid label imprint entry if provided
+Apple Music,Additional Metadata Fields,Genre,Must use DSP’s supported genre taxonomy; Title Case
+Apple Music,Additional Metadata Fields,Sub-Genre,Optional; must match DSP’s subgenre list if provided
+Apple Music,Additional Metadata Fields,Release Date,YYYY-MM-DD format; ≥ today for new; pre-save ≥ 2 weeks out
+Apple Music,Additional Metadata Fields,Artist Name,Exact match of registered artist profile; case-sensitive
+Apple Music,Additional Metadata Fields,Release Name,≤100 characters; no emojis; consistent with UPC metadata
+Apple Music,Additional Metadata Fields,Format,Must comply with DSP audio spec formats (see audio specs)
+Apple Music,Additional Metadata Fields,Marketing Blurb,≤300 characters; plain text; no URLs
+Apple Music,Additional Metadata Fields,Mood,Optional; select from DSP’s mood tags list
