@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
             overview.style.display = '';
         });
     }
+    
 });
 
 
@@ -566,72 +567,7 @@ async function fetchTickets() {
             render(html`<tr><td colspan="99" class="text-center p-5 text-danger">Error: ${err.message}</td></tr>`, document.getElementById(`${platform}-table-body`))
         );
     }
-}
-
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.classList.contains('status-save')) {
-        const button = event.target;
-        const rowIndex = parseInt(button.getAttribute('data-row-index'), 10);
-        const dsp = button.getAttribute('data-dsp');
-        const ticketId = button.getAttribute('data-ticket-id');
-        const row = button.closest('tr');
-
-        const statusCellDetailed = Array.from(row.children).find(td => {
-            return td.querySelector('.track-capsule') && td.textContent.toLowerCase().includes('failed');
-        });
-
-        if (statusCellDetailed) {
-            statusCellDetailed.innerHTML = `
-                <span class="track-capsule status-passed">
-                    <span class="status-dot dot-passed"></span>
-                    Passed
-                </span>
-            `;
-
-            // Update the corresponding data in completedspGroupedData
-            if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId] && completedspGroupedData[dsp][ticketId][rowIndex]) {
-                completedspGroupedData[dsp][ticketId][rowIndex].status = 'Passed';
-            }
-        }
-
-        // Make the new_value cell non-editable and display as plain text in detailed view
-        const editableCellDetailed = row.querySelector('.editable-cell');
-        if (editableCellDetailed) {
-            const updatedText = editableCellDetailed.textContent.trim();
-            editableCellDetailed.outerHTML = `<td>${updatedText}</td>`;
-
-            // Update the corresponding data in completedspGroupedData
-            if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId] && completedspGroupedData[dsp][ticketId][rowIndex]) {
-                completedspGroupedData[dsp][ticketId][rowIndex].new_value = updatedText;
-            }
-        }
-
-        // Remove Save button in detailed view
-        button.closest('td').innerHTML = '';
-
-        const dspWrapperDetailed = row.closest('.platform-heading-wrapper');
-        const statusSpansDetailed = dspWrapperDetailed.querySelectorAll('td span.track-capsule');
-
-        const allPassedDetailed = Array.from(statusSpansDetailed).every(span =>
-            span.textContent.trim().toLowerCase() === 'passed'
-        );
-
-        if (allPassedDetailed) {
-            const universalStatusDetailed = dspWrapperDetailed.querySelector('.universal-status');
-            if (universalStatusDetailed) {
-                universalStatusDetailed.classList.remove('status-failed');
-                universalStatusDetailed.classList.add('status-passed');
-                universalStatusDetailed.innerHTML = `
-                    <span class="status-dot dot-passed"></span>
-                    Passed
-                `;
-            }
-        }
-
-        // Update the status in the main table
-        updateTrackStatusInMainTable(ticketId, !allPassedDetailed); // If all passed in detailed, then passed overall
-    }
-});
+}   
 
 function updateTrackStatusInMainTable(trackTitle, hasFailed) {
     const row = document.querySelector(`tr[data-track-title="${trackTitle}"] .status-cell`);
@@ -699,6 +635,96 @@ async function setupRowClickListener() {
     }
 }
 
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.classList.contains('status-save')) {
+        const button = event.target;
+        const rowIndex = parseInt(button.getAttribute('data-row-index'), 10);
+        const dsp = button.getAttribute('data-dsp');
+        const ticketId = button.getAttribute('data-ticket-id');
+        const row = button.closest('tr');
+
+        const statusCellDetailed = Array.from(row.children).find(td => {
+            return td.querySelector('.track-capsule') && td.textContent.toLowerCase().includes('failed');
+        });
+
+        if (statusCellDetailed) {
+            statusCellDetailed.innerHTML = `
+                <span class="track-capsule status-passed">
+                    <span class="status-dot dot-passed"></span>
+                    Passed
+                </span>
+            `;
+
+            // Update the corresponding data in completedspGroupedData
+            if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId] && completedspGroupedData[dsp][ticketId][rowIndex]) {
+                completedspGroupedData[dsp][ticketId][rowIndex].status = 'Passed';
+            }
+        }
+
+        // Make the new_value cell non-editable and display as plain text in detailed view
+        const editableCellDetailed = row.querySelector('.editable-cell');
+        if (editableCellDetailed) {
+            const updatedText = editableCellDetailed.textContent.trim();
+            editableCellDetailed.outerHTML = `<td>${updatedText}</td>`;
+
+            // Update the corresponding data in completedspGroupedData
+            if (completedspGroupedData[dsp] && completedspGroupedData[dsp][ticketId] && completedspGroupedData[dsp][ticketId][rowIndex]) {
+                completedspGroupedData[dsp][ticketId][rowIndex].new_value = updatedText;
+            }
+        }
+
+        // Remove Save button in detailed view
+        button.closest('td').innerHTML = '';
+
+        const dspWrapperDetailed = row.closest('.platform-heading-wrapper');
+        const statusSpansDetailed = dspWrapperDetailed.querySelectorAll('td span.track-capsule');
+        const publishButton = dspWrapperDetailed.querySelector('.publish-button');
+
+        const allPassedDetailed = Array.from(statusSpansDetailed).every(span =>
+            span.textContent.trim().toLowerCase() === 'passed'
+        );
+
+        if (allPassedDetailed) {
+            const universalStatusDetailed = dspWrapperDetailed.querySelector('.universal-status');
+            if (universalStatusDetailed) {
+                universalStatusDetailed.classList.remove('status-failed');
+                universalStatusDetailed.classList.add('status-passed');
+                universalStatusDetailed.innerHTML = `
+                    <span class="status-dot dot-passed"></span>
+                    Passed
+                `;
+            }
+            // Enable the publish button when all statuses are passed
+            if (publishButton) {
+                publishButton.disabled = false;
+                publishButton.classList.remove('status-failed', 'status-passed'); // clean any previous
+                publishButton.classList.add('status-pending');
+            }
+        } else {
+            // Disable the publish button if any status is not passed
+            if (publishButton) {
+                publishButton.disabled = true;
+                publishButton.classList.remove('status-pending', 'status-passed'); // clean any previous
+                publishButton.classList.add('status-failed');
+            }
+        }
+
+        // Update the status in the main table
+        updateTrackStatusInMainTable(ticketId, !allPassedDetailed); // If all passed in detailed, then passed overall
+    } else if (event.target && event.target.classList.contains('publish-button')) {
+        const publishButton = event.target;
+        const dspToPublish = publishButton.getAttribute('data-dsp');
+        const ticketIdPublished = publishButton.getAttribute('data-ticket-id');
+
+        // Implement your publish logic here
+        alert(`${ticketIdPublished} published on ${dspToPublish}!`);
+        // Optionally, you can update the UI further after publishing (e.g., disable the button, show a confirmation)
+        publishButton.disabled = true;
+        publishButton.textContent = 'Published'; // Or change the icon
+        publishButton.classList.remove('status-pending');
+        publishButton.classList.add('status-passed');
+    }
+});
 
 
 function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
@@ -725,19 +751,31 @@ function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
             const statusClass = allPassed ? 'status-passed' : 'status-failed';
             const dotClass = allPassed ? 'dot-passed' : 'dot-failed';
             const statusText = allPassed ? 'Passed' : 'Failed';
+            const publishButtonDisabled = !allPassed;
 
             tableHTML += `
                 <div class="platform-heading-wrapper" data-platform="${dsp}">
-                    <h5 class="platform-heading">
-                        <span class="platform-icon">${platformIcon} ${dsp}</span>
-                        <span class="track-capsule universal-status ${statusClass}" data-dsp="${dsp}">
-                            <span class="status-dot ${dotClass}"></span>
-                            ${statusText}
+                    <h5 class="platform-heading" style="display: flex; align-items: center; justify-content: space-between;">
+                        <span style="display: flex; align-items: center; gap: 10px;">
+                            <span class="platform-icon">${platformIcon} ${dsp}</span>
+                            <span class="track-capsule universal-status ${statusClass}" data-dsp="${dsp}">
+                                <span class="status-dot ${dotClass}"></span>
+                                ${statusText}
+                            </span>
                         </span>
+                        <button
+                            class="publish-button track-capsule status-failed"
+                            data-dsp="${dsp}"
+                            data-ticket-id="${ticketId}"
+                            disabled="${publishButtonDisabled}"
+                        >
+                            Publish
+                        </button>
                     </h5>
-                    ${generateTableHTMLForTicket(rules,ticketId,dsp)}
+
+                    ${generateTableHTMLForTicket(rules, ticketId, dsp)}
                 </div>
-                `;
+            `;
         }
     }
 
@@ -749,7 +787,7 @@ function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
 }
 
 
-function generateTableHTMLForTicket(rules,ticketId,dsp) {
+function generateTableHTMLForTicket(rules, ticketId, dsp) {
     if (!rules || rules.length === 0) {
         return '<p>No rules found for this DSP.</p>';
     }
@@ -760,22 +798,10 @@ function generateTableHTMLForTicket(rules,ticketId,dsp) {
     tableHTML += '</tr></thead><tbody>';
 
     rules.forEach((row, rowIndex) => {
-        tableHTML += '<tr data-row-index="' + rowIndex + '">'; 
+        tableHTML += '<tr data-row-index="' + rowIndex + '">';
         let statusIsPassed = false;
-        let currentDsp = ''; 
-        let currentTicketId = ''; 
-        if (row.dsp) {
-            currentDsp = row.dsp;
-        }else{
-            currentDsp=dsp;
-        }
-
-        if (row.ticketId) {
-            currentTicketId = row.ticketId;
-        } else if (/* Logic to access ticketId from context */ ticketId) {
-            currentTicketId = ticketId; 
-        }
-
+        let currentDsp = dsp; // Use the dsp passed to the function
+        let currentTicketId = ticketId; // Use the ticketId passed to the function
 
         allColumns.forEach(col => {
             const value = row[col] ?? 'N/A';
@@ -839,8 +865,6 @@ function generateTableHTMLForTicket(rules,ticketId,dsp) {
     tableHTML += '</tbody></table>';
     return tableHTML;
 }
-
-
 
 async function collectValidationForTableRows(tableName) {
     const results = { items: [] };
