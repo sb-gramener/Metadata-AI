@@ -660,7 +660,6 @@ async function setupRowClickListener() {
     if (!tableBody) return;
 
     tableBody.addEventListener('click', async (e) => {
-        document.getElementById('back-to-home-btn').style.display = 'none';
 
         const td = e.target.closest('td');
         const tr = e.target.closest('tr');
@@ -686,6 +685,7 @@ async function setupRowClickListener() {
 
         // Show the row description panel
         if (rowDescription) rowDescription.style.display = 'block';
+        document.getElementById('back-to-home-btn').style.display = 'none';
         renderMetadata(ticketId);
     });
 
