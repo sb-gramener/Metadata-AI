@@ -193,6 +193,11 @@
             border: 1px solid #5c6064; /* Medium blue */
         }
 
+        .status-publish {
+            background-color: #f0cea8;
+            border: 1px solid #bd7715; /* Medium blue */
+        }
+
         .dot-pending {
             background-color: #5c6064; /* Medium blue */
         }
@@ -208,12 +213,18 @@
         }
 
         .editable-cell {
-    border: 1px solid #c0c0c0;
-    padding: 3px;
-    min-width: 100px;
-    display: inline-block;
-    cursor: pointer;
-}
+            border: 1px solid #c0c0c0;
+            padding: 3px;
+            min-width: 100px;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .publish-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6; /* optional: gives a visual cue that it's disabled */
+        }
+
 
     </style>
 
