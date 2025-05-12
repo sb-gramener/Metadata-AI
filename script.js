@@ -794,7 +794,7 @@ function generateTableHTMLForTicket(rules, ticketId, dsp) {
     const allColumns = Object.keys(rules[0]);
     let tableHTML = '<table class="table table-bordered table-striped"><thead><tr>';
     tableHTML += allColumns.map(col => `<th>${formatColumnName(col)}</th>`).join('');
-    tableHTML += '<th>Save</th>';
+    tableHTML += '<th>Update</th>';
     tableHTML += '</tr></thead><tbody>';
 
     rules.forEach((row, rowIndex) => {
@@ -851,7 +851,7 @@ function generateTableHTMLForTicket(rules, ticketId, dsp) {
                         data-dsp="${currentDsp}"
                         data-ticket-id="${currentTicketId}"
                     >
-                        Save
+                        Update
                     </button>
                 </td>
             `;
