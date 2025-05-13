@@ -738,6 +738,17 @@ document.addEventListener('click', function(event) {
         publishButton.textContent = 'Published'; // Or change the icon
         publishButton.classList.remove('status-pending');
         publishButton.classList.add('status-passed');
+    } else if (event.target && event.target.classList.contains('status-save-all')) {
+        const dsp = event.target.getAttribute('data-dsp');
+        const ticketId = event.target.getAttribute('data-ticket-id');
+
+        // Find all "Update" buttons for the specific DSP
+        const updateButtons = document.querySelectorAll(`.platform-heading-wrapper[data-platform="${dsp}"] .status-save`);
+        
+        // Trigger click event on each update button
+        updateButtons.forEach(button => {
+            button.click();  // Simulate click on each individual "Update" button
+        });
     }
 });
 
@@ -782,6 +793,7 @@ function renderMetadata(ticketId, targetElementId = 'metadataStatus') {
                             class="publish-button track-capsule status-failed"
                             data-dsp="${dsp}"
                             data-ticket-id="${ticketId}"
+                            style="margin-right:0.45rem"
                             disabled="${publishButtonDisabled}"
                         >
                             Publish
@@ -809,7 +821,13 @@ function generateTableHTMLForTicket(rules, ticketId, dsp) {
     const allColumns = Object.keys(rules[0]);
     let tableHTML = '<table class="table table-bordered table-striped"><thead><tr>';
     tableHTML += allColumns.map(col => `<th>${formatColumnName(col)}</th>`).join('');
-    tableHTML += '<th>Update</th>';
+    tableHTML += `<th>
+            <div class="update-all-wrapper">
+                <button class="track-capsule status-save-all" data-dsp="${dsp}" data-ticket-id="${ticketId}">
+                    Update All
+                </button>
+            </div>
+        </th>`;
     tableHTML += '</tr></thead><tbody>';
 
     rules.forEach((row, rowIndex) => {
@@ -859,7 +877,7 @@ function generateTableHTMLForTicket(rules, ticketId, dsp) {
 
         if (!statusIsPassed) {
             tableHTML += `
-                <td>
+                <td style="text-align:center">
                     <button
                         class="track-capsule status-save"
                         data-row-index="${rowIndex}"
