@@ -458,7 +458,7 @@ function databasecsv() {
             dataTransfer.items.add(rulesFile);
             rulesInput.files = dataTransfer.files;
             rulesInput.dispatchEvent(new Event('change', { bubbles: true }));
-            console.log("Rules uploaded successfully!");
+            console.log("Metadata uploaded successfully!");
         })
         .catch(error => {
             console.error("Rules Upload Error:", error);
@@ -709,8 +709,23 @@ document.addEventListener('click', function(event) {
             }
         }
 
-        // Update the status in the main table
-        updateTrackStatusInMainTable(ticketId, !allPassedDetailed); // If all passed in detailed, then passed overall
+        let allPlatformsPassed = true;
+
+        for (const platform in completedspGroupedData) {
+            const platformData = completedspGroupedData[platform];
+            if (platformData[ticketId]) {
+                const rows = platformData[ticketId];
+                const allPassed = rows.every(row => row.status.toLowerCase() === 'passed');
+                if (!allPassed) {
+                    allPlatformsPassed = false;
+                    break;
+                }
+            }
+        }
+
+        // Update the status in the main table based on all platforms
+        updateTrackStatusInMainTable(ticketId, !allPlatformsPassed); // ✅ Only mark as passed if all platforms passed
+
     } else if (event.target && event.target.classList.contains('publish-button')) {
         const publishButton = event.target;
         const dspToPublish = publishButton.getAttribute('data-dsp');
